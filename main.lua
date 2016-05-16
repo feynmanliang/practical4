@@ -15,8 +15,8 @@ local opt = {
 -- train sigmoid and requ versions
 model_sigmoid, losses_sigmoid = train(opt, data)
 -- TODO: uncomment once you implement requ
---opt.nonlinearity_type = 'requ'
---model_requ, losses_requ = train(opt, data)
+opt.nonlinearity_type = 'requ'
+model_requ, losses_requ = train(opt, data)
 
 
 --------------------------------------------------------
@@ -31,15 +31,15 @@ gnuplot.plot({'sigmoid',
   torch.Tensor(losses_sigmoid),    -- y-coordinates
   '-'}
   -- TODO: uncomment when you implement requ
-  -- , {'requ',
-  -- torch.range(1, #losses_requ),    -- x-coordinates
-  -- torch.Tensor(losses_requ),       -- y-coordinates
-  -- '-'}
+  , {'requ',
+  torch.range(1, #losses_requ),    -- x-coordinates
+  torch.Tensor(losses_requ),       -- y-coordinates
+  '-'}
   )
 
-models = { 
-    --requ = model_requ,  -- TODO: uncomment once you implement requ
-    sigmoid = model_sigmoid 
+models = {
+    requ = model_requ,  -- TODO: uncomment once you implement requ
+    sigmoid = model_sigmoid
 }
 for model_name, model in pairs(models) do
   -- classification error on train set
@@ -66,7 +66,8 @@ for model_name, model in pairs(models) do
   end
   result[1][1] = 0 -- ugly hack to get the right scale
   result[1][2] = 1 -- ugly hack to get the right scale
-  gnuplot.figure()
+  gnuplot.epsfigure(model_name..'.eps')
   gnuplot.imagesc(result, model_name)
+  gnuplot.plotflush()
 end
 
