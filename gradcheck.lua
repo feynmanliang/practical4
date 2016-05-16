@@ -11,15 +11,18 @@ local opt = { nonlinearity_type = 'requ' }
 local function checkgrad(f, g, x, eps)
   -- compute true gradient
   local grad = g(x)
-  
+
   -- compute numeric approximations to gradient
   local eps = eps or 1e-7
   local grad_est = torch.DoubleTensor(grad:size())
   for i = 1, grad:size(1) do
     -- TODO: do something with x[i] and evaluate f twice, and put your estimate of df/dx_i into grad_est[i]
     x[i] = x[i] + eps
-    ...something(s) here
-    grad_est[i] = ...something here
+    local f_plus = f(x)
+    x[i] = x[i] - 2*eps
+    local f_minus = f(x)
+    grad_est[i] = (f_plus - f_minus) / (2 * eps)
+    x[i] = x[i] + eps
   end
 
   -- computes (symmetric) relative error of gradient
