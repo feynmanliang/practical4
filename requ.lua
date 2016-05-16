@@ -12,8 +12,8 @@ end
 function ReQU:updateGradInput(input, gradOutput)
   -- TODO
   self.gradInput:resizeAs(gradOutput):copy(gradOutput)
-  input:clamp(0, math.huge):mul(2)
-  self.gradInput:cmul(input)
+  input:clamp(0, math.huge)
+  self.gradInput:cmul(input):mul(2)
   return self.gradInput
 end
 
