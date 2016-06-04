@@ -21,8 +21,9 @@ local function checkgrad(f, g, x, eps)
     local f_plus = f(x)
     x[i] = x[i] - 2*eps
     local f_minus = f(x)
-    grad_est[i] = (f_plus - f_minus) / (2 * eps)
     x[i] = x[i] + eps
+
+    grad_est[i] = (f_plus - f_minus) / (2 * eps)
   end
 
   -- computes (symmetric) relative error of gradient

@@ -25,8 +25,9 @@ local function jacobian_wrt_input(module, x, eps)
     local z_plus = module:forward(x):clone()
     x[i] = x[i] - 2*eps
     local z_minus = module:forward(x):clone()
-    jac_est[{{},i}]:copy(z_plus):add(-1, z_minus):div(2*eps)
     x[i] = x[i] + eps
+
+    jac_est[{{},i}]:copy(z_plus):add(-1, z_minus):div(2*eps)
   end
 
   -- computes (symmetric) relative error of gradient
